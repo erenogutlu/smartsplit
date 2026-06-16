@@ -2,6 +2,8 @@ package com.smartsplit.backend.entity;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "expenses")
@@ -16,10 +18,19 @@ public class Expense {
     // Using BigDecimal for accurate money calculations
     private BigDecimal amount;
 
-    // Many expenses can be paid by one user
+    // The person who paid
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User paidBy;
+
+    // NEW: The people who share this expense
+    @ManyToMany
+    @JoinTable(
+            name = "expense_participants",
+            joinColumns = @JoinColumn(name = "expense_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> participants = new ArrayList<>();
 
     public Expense() {}
 
@@ -35,4 +46,7 @@ public class Expense {
 
     public User getPaidBy() { return paidBy; }
     public void setPaidBy(User paidBy) { this.paidBy = paidBy; }
+
+    public List<User> getParticipants() { return participants; }
+    public void setParticipants(List<User> participants) { this.participants = participants;}
 }

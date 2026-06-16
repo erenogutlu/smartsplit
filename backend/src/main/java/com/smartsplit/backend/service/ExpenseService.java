@@ -38,28 +38,33 @@ public class ExpenseService {
         Map<String, Double> balances = new HashMap<>();
         if (users.isEmpty()) return balances; // No users, no balances
 
-        // 1. Calculate total spent
-        double totalExpense = expenses.stream()
-                .mapToDouble(e -> e.getAmount().doubleValue())
-                .sum();
-
-        // 2. Calculate average per person
-        double perPerson = totalExpense / users.size();
-
-        // 3. Calculate balance for each user
+        // 1. Initialize everyone's balance to 0.0
         for (User user : users) {
-            // Find how much this specific user paid in total
-            double paidByUser = expenses.stream()
-                    .filter(e -> e.getPaidBy().getId().equals(user.getId()))
-                    .mapToDouble(e -> e.getAmount().doubleValue())
-                    .sum();
-
-            // Balance = What they paid - What they should have paid
-            double balance = paidByUser - perPerson;
-
-            // Math.round is used to keep 2 decimal places (e.g., 12.75)
-            balances.put(user.getName(), Math.round(balance * 100.0) / 100.0);
+            balances.put(user.getName(), 0.0);
         }
+
+        // 2. Process each expense
+        for (Expense exp : expenses) {
+            // Skip old data that doesn't have participants yet to prevent crashes
+            if (exp.getParticipants() == null || exp.getParticipants().isEmpty()) continue;
+
+            double amount = exp.getAmount().doubleValue();
+            String payerName = exp.getPaidBy().getName();
+            int participantCount = exp.getParticipants().size();
+            double splitAmount = amount / participantCount;
+
+            // The payer gets the full amount added to their balance
+            balances.put(payerName, balances.get(payerName) + amount);
+
+            // Everyone who participated gets the split amount subtracted from their balance
+            for (User participant : exp.getParticipants()) {
+                String pName = participant.getName();
+                balances.put(pName, balances.get(pName) - splitAmount);
+            }
+        }
+
+        // 3. Round everything to 2 decimal places (e.g., 12.75)
+        balances.replaceAll((name, balance) -> Math.round(balance * 100.0) / 100.0);
 
         return balances;
     }
