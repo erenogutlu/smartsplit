@@ -76,6 +76,18 @@ function App() {
         );
     };
 
+    // NEW: Smart Default - Auto-check the payer
+    const handlePayerChange = (e) => {
+        const selectedId = e.target.value;
+        setPayerId(selectedId); // 1. Açılır menüyü güncelle
+
+        const numericId = parseInt(selectedId);
+        // 2. Eğer bu kişi zaten işaretli değilse, onu otomatik olarak listeye ekle
+        if (!selectedParticipants.includes(numericId)) {
+            setSelectedParticipants(prev => [...prev, numericId]);
+        }
+    };
+
     // Handle new expense submission
     const handleAddExpense = (e) => {
         e.preventDefault();
@@ -151,7 +163,7 @@ function App() {
                     <div style={{ display: 'flex', gap: '10px' }}>
                         <input type="text" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} required style={inputStyle} />
                         <input type="number" step="0.01" placeholder="Amount (€)" value={amount} onChange={e => setAmount(e.target.value)} required style={inputStyle} />
-                        <select value={payerId} onChange={e => setPayerId(e.target.value)} required style={inputStyle}>
+                            <select value={payerId} onChange={handlePayerChange} required style={inputStyle}>
                             <option value="" disabled>Who Paid?</option>
                             {users.map(u => (
                                 <option key={u.id} value={u.id}>{u.name}</option>
