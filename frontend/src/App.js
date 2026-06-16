@@ -91,6 +91,19 @@ function App() {
             .catch(err => console.error("Error adding expense:", err));
     };
 
+    // Handle deleting an expense
+    const handleDeleteExpense = (id) => {
+        fetch(`http://localhost:8080/api/expenses/${id}`, {
+            method: 'DELETE',
+        })
+            .then(() => {
+                // Refresh expenses and balances after deletion
+                fetchExpenses();
+                fetchBalances();
+            })
+            .catch(err => console.error("Error deleting expense:", err));
+    };
+
     return (
         <div className="App">
             <header className="App-header">
@@ -130,9 +143,16 @@ function App() {
 
                 <ul style={listStyle}>
                     {expenses.map(exp => (
-                        <li key={exp.id} style={listItemStyle}>
-                            <strong>{exp.description}</strong> - €{exp.amount} <br/>
-                            <small style={{ color: '#aaa' }}>Paid by: {exp.paidBy?.name}</small>
+                        <li key={exp.id} style={{ ...listItemStyle, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div>
+                                <strong>{exp.description}</strong> - €{exp.amount} <br/>
+                                <small style={{ color: '#aaa' }}>Paid by: {exp.paidBy?.name}</small>
+                            </div>
+                            <button
+                                onClick={() => handleDeleteExpense(exp.id)}
+                                style={{ backgroundColor: '#f44336', color: 'white', border: 'none', borderRadius: '4px', padding: '5px 10px', cursor: 'pointer' }}>
+                                X
+                            </button>
                         </li>
                     ))}
                 </ul>

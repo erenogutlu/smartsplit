@@ -33,4 +33,10 @@ public class ExpenseController {
     public Map<String, Double> getAllBalances() {
         return expenseService.calculateBalances();
     }
+
+    // DELETE endpoint to remove an expense
+    @DeleteMapping("/{id}")
+    public void deleteExpense(@PathVariable Long id) {
+        expenseService.deleteExpense(id);
+    }
 }
