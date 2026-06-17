@@ -2,80 +2,123 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-    // 1. States for Users
-    const [users, setUsers] = useState([]);
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
+    // --- MY AUTHENTICATION STATES ---
+    // I check local storage first so my users stay logged in even if they refresh the page.
+    const [token, setToken] = useState(localStorage.getItem('token') || '');
+    const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
 
-    // 2. States for Normal Expenses
+    // I use this to toggle the lobby UI between 'Login' and 'Register'
+    const [isLoginMode, setIsLoginMode] = useState(true);
+
+    const [authName, setAuthName] = useState('');
+    const [authEmail, setAuthEmail] = useState('');
+    const [authPassword, setAuthPassword] = useState('');
+
+    // --- MY APP DATA STATES ---
+    const [users, setUsers] = useState([]);
     const [expenses, setExpenses] = useState([]);
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState('');
     const [payerId, setPayerId] = useState('');
     const [selectedParticipants, setSelectedParticipants] = useState([]);
-
-    // 3. States for Balances
     const [balances, setBalances] = useState({});
 
-    // 4. NEW: States for Settle Up (Borç Kapatma)
+    // States for the 'Settle Up' feature
     const [settlePayerId, setSettlePayerId] = useState('');
     const [settleReceiverId, setSettleReceiverId] = useState('');
     const [settleAmount, setSettleAmount] = useState('');
 
-    // --- FETCH DATA ---
-    useEffect(() => {
-        fetchUsers();
-        fetchExpenses();
-        fetchBalances();
-    }, []);
+    // --- MY SECURITY HELPERS ---
+    // This is my magic function. I attach the JWT token to every request
+    // so my Spring Boot security filter chain lets me in.
+    const getHeaders = () => ({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    });
 
+    // I only fetch the sensitive data if I have successfully authenticated the user.
+    useEffect(() => {
+        if (isAuthenticated) {
+            fetchUsers();
+            fetchExpenses();
+            fetchBalances();
+        }
+    }, [isAuthenticated, token]);
+
+    // --- API FETCH FUNCTIONS ---
     const fetchUsers = () => {
-        fetch('http://localhost:8080/api/users')
+        fetch('http://localhost:8080/api/users', { headers: getHeaders() })
             .then(res => res.json())
             .then(data => setUsers(data))
             .catch(err => console.error("Error fetching users:", err));
     };
 
     const fetchExpenses = () => {
-        fetch('http://localhost:8080/api/expenses')
+        fetch('http://localhost:8080/api/expenses', { headers: getHeaders() })
             .then(res => res.json())
             .then(data => setExpenses(data))
             .catch(err => console.error("Error fetching expenses:", err));
     };
 
     const fetchBalances = () => {
-        fetch('http://localhost:8080/api/expenses/balances')
+        fetch('http://localhost:8080/api/expenses/balances', { headers: getHeaders() })
             .then(res => res.json())
             .then(data => setBalances(data))
             .catch(err => console.error("Error fetching balances:", err));
     };
 
-    // --- HANDLERS ---
-    const handleAddUser = (e) => {
+    // --- AUTHENTICATION HANDLERS ---
+    // I combined login and register into one smart function to keep my code DRY (Don't Repeat Yourself).
+    const handleAuth = (e) => {
         e.preventDefault();
-        const newUser = { name, email };
-        fetch('http://localhost:8080/api/users', {
+        const endpoint = isLoginMode ? '/api/auth/login' : '/api/auth/register';
+        const payload = isLoginMode
+            ? { email: authEmail, password: authPassword }
+            : { name: authName, email: authEmail, password: authPassword };
+
+        fetch(`http://localhost:8080${endpoint}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newUser),
+            body: JSON.stringify(payload),
         })
-            .then(res => res.json())
+            .then(async res => {
+                if (!res.ok) throw new Error("Authentication failed!");
+                // Register returns a simple string, while Login returns my JWT JSON object.
+                return isLoginMode ? res.json() : res.text();
+            })
             .then(data => {
-                setUsers([...users, data]);
-                setName('');
-                setEmail('');
-                fetchBalances();
+                if (isLoginMode) {
+                    // Login successful: I save the token to the browser's wallet (LocalStorage).
+                    setToken(data.token);
+                    setIsAuthenticated(true);
+                    localStorage.setItem('token', data.token);
+                } else {
+                    alert("Registration successful! You can now log in.");
+                    setIsLoginMode(true);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Error! Please check your credentials.");
             });
     };
 
+    // I clear the states and destroy the token from local storage to lock the app.
+    const handleLogout = () => {
+        setToken('');
+        setIsAuthenticated(false);
+        localStorage.removeItem('token');
+    };
+
+    // --- EXPENSE LOGIC HANDLERS ---
     const handleCheckboxChange = (userId) => {
         setSelectedParticipants(prev =>
-            prev.includes(userId)
-                ? prev.filter(id => id !== userId)
-                : [...prev, userId]
+            prev.includes(userId) ? prev.filter(id => id !== userId) : [...prev, userId]
         );
     };
 
+    // My Smart Default UX feature: When a payer is selected, I automatically add them
+    // to the participants list, assuming they also ate/used what they paid for.
     const handlePayerChange = (e) => {
         const selectedId = e.target.value;
         setPayerId(selectedId);
@@ -87,100 +130,93 @@ function App() {
 
     const handleAddExpense = (e) => {
         e.preventDefault();
-        if (selectedParticipants.length === 0) {
-            alert("Please select at least one participant!");
-            return;
-        }
+        if (selectedParticipants.length === 0) return alert("Please select at least one participant!");
 
+        // I format the payload exactly how my Spring Data JPA @ManyToMany relationship expects it.
         const newExpense = {
-            description,
-            amount: parseFloat(amount),
+            description, amount: parseFloat(amount),
             paidBy: { id: parseInt(payerId) },
             participants: selectedParticipants.map(id => ({ id: id }))
         };
 
         fetch('http://localhost:8080/api/expenses', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getHeaders(), // Injecting the VIP card!
             body: JSON.stringify(newExpense),
-        })
-            .then(res => res.json())
-            .then(data => {
-                setExpenses([...expenses, data]);
-                setDescription('');
-                setAmount('');
-                setPayerId('');
-                setSelectedParticipants([]);
-                fetchBalances();
-            });
+        }).then(() => {
+            setDescription(''); setAmount(''); setPayerId(''); setSelectedParticipants([]);
+            fetchExpenses(); fetchBalances();
+        });
     };
 
-    const handleDeleteExpense = (id) => {
-        fetch(`http://localhost:8080/api/expenses/${id}`, {
-            method: 'DELETE',
-        })
-            .then(() => {
-                fetchExpenses();
-                fetchBalances();
-            });
-    };
-
-    // NEW: Handle Settle Up
+    // I created a disguised expense here. A settlement is just an expense paid by the debtor,
+    // exclusively shared with the creditor. My backend algorithm handles the rest magically.
     const handleSettleUp = (e) => {
         e.preventDefault();
+        if (settlePayerId === settleReceiverId) return alert("You cannot settle up with yourself!");
 
-        if (settlePayerId === settleReceiverId) {
-            alert("You cannot settle up with yourself!");
-            return;
-        }
-
-        // We create a special "Expense" disguised as a settlement
         const settlementExpense = {
-            description: "Debt Settlement 🤝",
-            amount: parseFloat(settleAmount),
-            paidBy: { id: parseInt(settlePayerId) },          // The one paying the debt
-            participants: [{ id: parseInt(settleReceiverId) }] // The one receiving the money
+            description: "Debt Settlement 🤝", amount: parseFloat(settleAmount),
+            paidBy: { id: parseInt(settlePayerId) },
+            participants: [{ id: parseInt(settleReceiverId) }]
         };
 
         fetch('http://localhost:8080/api/expenses', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getHeaders(),
             body: JSON.stringify(settlementExpense),
-        })
-            .then(res => res.json())
-            .then(data => {
-                setExpenses([...expenses, data]);
-                setSettlePayerId('');
-                setSettleReceiverId('');
-                setSettleAmount('');
-                fetchBalances(); // This will magically zero out the debts!
-            });
+        }).then(() => {
+            setSettlePayerId(''); setSettleReceiverId(''); setSettleAmount('');
+            fetchExpenses(); fetchBalances();
+        });
     };
 
-    // --- UI RENDER ---
+    const handleDeleteExpense = (id) => {
+        fetch(`http://localhost:8080/api/expenses/${id}`, {
+            method: 'DELETE', headers: getHeaders(),
+        }).then(() => { fetchExpenses(); fetchBalances(); });
+    };
+
+    // ==========================================
+    // SCREEN 1: THE LOBBY (Public Area)
+    // I block the entire app UI if the user is not authenticated.
+    // ==========================================
+    if (!isAuthenticated) {
+        return (
+            <div className="App">
+                <header className="App-header">
+                    <h1>SmartSplit Security 🔒</h1>
+                    <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: '15px', width: '300px', backgroundColor: '#282c34', padding: '30px', borderRadius: '10px', border: '1px solid #555' }}>
+                        <h2>{isLoginMode ? 'Login' : 'Register'}</h2>
+                        {!isLoginMode && (
+                            <input type="text" placeholder="Name" value={authName} onChange={e => setAuthName(e.target.value)} required style={inputStyle} />
+                        )}
+                        <input type="email" placeholder="Email" value={authEmail} onChange={e => setAuthEmail(e.target.value)} required style={inputStyle} />
+                        <input type="password" placeholder="Password" value={authPassword} onChange={e => setAuthPassword(e.target.value)} required style={inputStyle} />
+                        <button type="submit" style={btnStyle}>{isLoginMode ? 'Login' : 'Register'}</button>
+                    </form>
+                    <p style={{ marginTop: '20px', cursor: 'pointer', color: '#61dafb', textDecoration: 'underline' }} onClick={() => setIsLoginMode(!isLoginMode)}>
+                        {isLoginMode ? "Don't have an account? Register." : "Already have an account? Login."}
+                    </p>
+                </header>
+            </div>
+        );
+    }
+
+    // ==========================================
+    // SCREEN 2: THE VIP AREA (Secured App)
+    // Only visible when the user holds a valid JWT token.
+    // ==========================================
     return (
         <div className="App">
             <header className="App-header">
-                <h1>SmartSplit</h1>
+                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', maxWidth: '600px', alignItems: 'center' }}>
+                    <h1>SmartSplit</h1>
+                    <button onClick={handleLogout} style={{ ...btnStyle, backgroundColor: '#f44336', color: 'white' }}>Logout 🚪</button>
+                </div>
 
-                {/* --- USERS --- */}
-                <h2>Users</h2>
-                <form onSubmit={handleAddUser} style={{ marginBottom: '20px' }}>
-                    <input type="text" placeholder="Name" value={name} onChange={e => setName(e.target.value)} required style={inputStyle} />
-                    <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required style={inputStyle} />
-                    <button type="submit" style={btnStyle}>Add</button>
-                </form>
-
-                <ul style={listStyle}>
-                    {users.map(u => (
-                        <li key={u.id} style={listItemStyle}>
-                            <strong>{u.name}</strong> - {u.email}
-                        </li>
-                    ))}
-                </ul>
-
-                {/* --- EXPENSES --- */}
-                <h2 style={{ marginTop: '40px' }}>Expenses</h2>
+                {/* --- EXPENSES SECTION --- */}
+                <h2 style={{ marginTop: '20px' }}>Add Expense</h2>
                 <form onSubmit={handleAddExpense} style={{ marginBottom: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
                     <div style={{ display: 'flex', gap: '10px' }}>
                         <input type="text" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} required style={inputStyle} />
@@ -205,22 +241,23 @@ function App() {
                     <button type="submit" style={{...btnStyle, marginTop: '10px'}}>Add Expense</button>
                 </form>
 
-                {/* --- NEW: SETTLE UP SECTION --- */}
-                <h2 style={{ marginTop: '40px', color: '#4caf50' }}>Settle Up</h2>
+                {/* --- SETTLE UP SECTION --- */}
+                <h2 style={{ marginTop: '20px', color: '#4caf50' }}>Settle Up</h2>
                 <form onSubmit={handleSettleUp} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
                     <select value={settlePayerId} onChange={e => setSettlePayerId(e.target.value)} required style={inputStyle}>
-                        <option value="" disabled>From (Who pays?)</option>
+                        <option value="" disabled>From</option>
                         {users.map(u => <option key={u.id} value={u.id}>{u.name}</option>)}
                     </select>
                     <span style={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>➡️</span>
                     <select value={settleReceiverId} onChange={e => setSettleReceiverId(e.target.value)} required style={inputStyle}>
-                        <option value="" disabled>To (Who receives?)</option>
+                        <option value="" disabled>To</option>
                         {users.map(u => <option key={u.id} value={u.id}>{u.name}</option>)}
                     </select>
                     <input type="number" step="0.01" placeholder="Amount (€)" value={settleAmount} onChange={e => setSettleAmount(e.target.value)} required style={inputStyle} />
                     <button type="submit" style={{...btnStyle, backgroundColor: '#4caf50', color: 'white'}}>Settle</button>
                 </form>
 
+                {/* --- EXPENSE LIST --- */}
                 <ul style={listStyle}>
                     {expenses.map(exp => (
                         <li key={exp.id} style={{ ...listItemStyle, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -236,7 +273,7 @@ function App() {
                     ))}
                 </ul>
 
-                {/* --- SETTLEMENTS --- */}
+                {/* --- SETTLEMENTS (BALANCES) --- */}
                 <h2 style={{ marginTop: '40px', color: '#ffeb3b' }}>Balances</h2>
                 <ul style={listStyle}>
                     {Object.entries(balances).map(([userName, balance]) => (
@@ -251,13 +288,12 @@ function App() {
                         </li>
                     ))}
                 </ul>
-
             </header>
         </div>
     );
 }
 
-// Styles
+// UI Styles
 const inputStyle = { padding: '8px', borderRadius: '4px', border: '1px solid #ccc' };
 const btnStyle = { padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', backgroundColor: '#61dafb', border: 'none', fontWeight: 'bold', color: '#282c34' };
 const deleteBtnStyle = { backgroundColor: '#f44336', color: 'white', border: 'none', borderRadius: '4px', padding: '5px 10px', cursor: 'pointer', fontWeight: 'bold' };
