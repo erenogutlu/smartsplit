@@ -4,7 +4,13 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/smartsplit/backend/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/pom.xml" />
+      </list>
+    </option>
+    <option name="enabledProfiles">
+      <list>
+        <option value="native" />
+        <option value="nativeTest" />
       </list>
     </option>
   </component>
