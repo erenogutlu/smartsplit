@@ -1,70 +1,40 @@
-# Getting Started with Create React App
+#  SmartSplit - Modern Expense Sharing App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+SmartSplit is a full-stack, secure, and intuitive web application designed to help friends, roommates, and colleagues split bills and track shared expenses effortlessly.
 
-## Available Scripts
+Built with an industry-standard architecture, it features robust **JWT Authentication**, real-time **Balance Calculation**, and a personalized **User Dashboard**.
 
-In the project directory, you can run:
+##  Key Features
 
-### `npm start`
+*  Secure Authentication:  Complete Login/Register flow protected by Spring Security and JSON Web Tokens (JWT).
+* Personalized Dashboard: Users are greeted with a customized summary of their current financial status (Owes vs. Gets).
+* Expense Categorization: Tag expenses with categories (Food, Transport, Utilities) using Java Enums.
+* Smart Settlement: Advanced algorithm to handle "Settle Up" transactions between debtors and creditors.
+* Responsive UI: A clean, component-based React frontend built for seamless user experience.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+##  Tech Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Backend (The Engine):**
+* Java 21 & Spring Boot 3.x
+* Spring Security & JJWT (JSON Web Token)
+* Spring Data JPA & Hibernate
+* PostgreSQL (Database)
+* JUnit (Unit Testing)
 
-### `npm test`
+**Frontend (The Interface):**
+* React.js (Hooks, Functional Components)
+* LocalStorage (Token Management)
+* Standard CSS
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+##  How to Run Locally
 
-### `npm run build`
+### 1. Database Setup
+Ensure PostgreSQL is running on your machine. Create a new database named `smartsplit`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 2. Backend Setup
+1. Navigate to the `backend` folder.
+2. Open `src/main/resources/application.properties` and update your database credentials:
+   ```properties
+   spring.datasource.url=jdbc:postgresql://localhost:5432/smartsplit
+   spring.datasource.username=YOUR_USERNAME
+   spring.datasource.password=YOUR_PASSWORD
