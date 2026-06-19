@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FlexofficeApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(FlexofficeApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(FlexofficeApplication.class, args);
+	}
+
 }

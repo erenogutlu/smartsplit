@@ -22,6 +22,7 @@ function App() {
     const [payerId, setPayerId] = useState('');
     const [selectedParticipants, setSelectedParticipants] = useState([]);
     const [balances, setBalances] = useState({});
+    const [myDashboard, setMyDashboard] = useState(null);
 
     // States for the 'Settle Up' feature
     const [settlePayerId, setSettlePayerId] = useState('');
@@ -42,6 +43,7 @@ function App() {
             fetchUsers();
             fetchExpenses();
             fetchBalances();
+            fetchMyDashboard();
         }
     }, [isAuthenticated, token]);
 
@@ -67,8 +69,15 @@ function App() {
             .catch(err => console.error("Error fetching balances:", err));
     };
 
+    const fetchMyDashboard = () => {
+        fetch('http://localhost:8080/api/expenses/my-dashboard', { headers: getHeaders() })
+            .then(res => res.json())
+            .then(data => setMyDashboard(data))
+            .catch(err => console.error("Error fetching dashboard:", err));
+    };
+
     // --- AUTHENTICATION HANDLERS ---
-    // I combined login and register into one smart function to keep my code DRY (Don't Repeat Yourself).
+    // I combined login and register into one smart function to keep my code DRY.
     const handleAuth = (e) => {
         e.preventDefault();
         const endpoint = isLoginMode ? '/api/auth/login' : '/api/auth/register';
@@ -144,8 +153,13 @@ function App() {
             headers: getHeaders(), // Injecting the VIP card!
             body: JSON.stringify(newExpense),
         }).then(() => {
-            setDescription(''); setAmount(''); setPayerId(''); setSelectedParticipants([]);
-            fetchExpenses(); fetchBalances();
+            setDescription('');
+            setAmount('');
+            setPayerId('');
+            setSelectedParticipants([]);
+            fetchExpenses();
+            fetchBalances();
+            fetchMyDashboard();
         });
     };
 
@@ -166,15 +180,23 @@ function App() {
             headers: getHeaders(),
             body: JSON.stringify(settlementExpense),
         }).then(() => {
-            setSettlePayerId(''); setSettleReceiverId(''); setSettleAmount('');
-            fetchExpenses(); fetchBalances();
+            setSettlePayerId('');
+            setSettleReceiverId('');
+            setSettleAmount('');
+            fetchExpenses();
+            fetchBalances();
+            fetchMyDashboard();
         });
     };
 
     const handleDeleteExpense = (id) => {
         fetch(`http://localhost:8080/api/expenses/${id}`, {
             method: 'DELETE', headers: getHeaders(),
-        }).then(() => { fetchExpenses(); fetchBalances(); });
+        }).then(() => {
+            fetchExpenses();
+            fetchBalances();
+            fetchMyDashboard();
+        });
     };
 
     // ==========================================
@@ -214,6 +236,25 @@ function App() {
                     <h1>SmartSplit</h1>
                     <button onClick={handleLogout} style={{ ...btnStyle, backgroundColor: '#f44336', color: 'white' }}>Logout 🚪</button>
                 </div>
+
+                {/* --- MY DASHBOARD SECTION --- */}
+                {myDashboard && (
+                    <div style={{ backgroundColor: '#20232a', padding: '20px', borderRadius: '10px', width: '100%', maxWidth: '400px', margin: '20px 0', border: '2px solid #61dafb', textAlign: 'center', boxShadow: '0 4px 8px rgba(0,0,0,0.2)' }}>
+                        <h2 style={{ margin: '0 0 10px 0', color: '#fff' }}>Hello, {myDashboard.name} 👋</h2>
+                        <p style={{ fontSize: '16px', margin: '0', color: '#aaa' }}>Your Current Balance:</p>
+                        <h1 style={{
+                            margin: '10px 0 0 0',
+                            fontSize: '32px',
+                            color: myDashboard.balance > 0 ? '#4caf50' : myDashboard.balance < 0 ? '#f44336' : '#9e9e9e'
+                        }}>
+                            {myDashboard.balance > 0
+                                ? `+€${myDashboard.balance} (Gets)`
+                                : myDashboard.balance < 0
+                                    ? `-€${Math.abs(myDashboard.balance)} (Owes)`
+                                    : '€0 (Settled)'}
+                        </h1>
+                    </div>
+                )}
 
                 {/* --- EXPENSES SECTION --- */}
                 <h2 style={{ marginTop: '20px' }}>Add Expense</h2>

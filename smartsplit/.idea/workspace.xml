@@ -5,35 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a8de27e-638f-4a34-9bb4-47481b0774f0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Projects.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/smartsplit/backend/BackendApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/smartsplit/backend/config/SecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/smartsplit/backend/controller/AuthController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/smartsplit/backend/controller/ExpenseController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/smartsplit/backend/controller/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/smartsplit/backend/entity/Expense.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/smartsplit/backend/entity/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/smartsplit/backend/repository/ExpenseRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/smartsplit/backend/repository/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/smartsplit/backend/security/JwtUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/smartsplit/backend/service/ExpenseService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/smartsplit/backend/service/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/smartsplit/backend/BackendApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/dataSources/608daab7-ba3d-4116-a1d4-8102dbab95c6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/dataSources/608daab7-ba3d-4116-a1d4-8102dbab95c6.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/dataSources/data_sources_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/dataSources/data_sources_history.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/FlexofficeApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/FlexofficeApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/controller/DeskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/controller/DeskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/controller/MeetingRoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/controller/MeetingRoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/controller/ReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/controller/ReservationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/entity/Desk.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/entity/Desk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/entity/MeetingRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/entity/MeetingRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/entity/Reservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/entity/Reservation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/repository/DeskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/repository/DeskRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/repository/MeetingRoomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/repository/MeetingRoomRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/repository/ReservationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/repository/ReservationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/service/DeskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/service/DeskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/service/MeetingRoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/service/MeetingRoomService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/service/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/service/ReservationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/java/com/flexoffice/flexoffice/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../flexoffice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../flexoffice/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/smartsplit/backend/controller/ExpenseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/smartsplit/backend/controller/ExpenseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +50,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HttpClientOnboardingState">{
   &quot;isOnboardingCommentShown&quot;: true
@@ -68,61 +68,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.3832505180479124" />
-      <entry key="MS500" value="3.0913115879137485" />
-      <entry key="S2" value="5.642584443221566" />
-      <entry key="S5" value="7.888425374159609" />
-      <entry key="S10" value="10.043108720403037" />
-      <entry key="S30" value="13.777743960599626" />
-      <entry key="S60" value="15.550628636684294" />
-      <entry key="M2" value="16.672902778371157" />
-      <entry key="M5" value="17.441816467333698" />
-      <entry key="M10" value="17.717981957185977" />
-      <entry key="M15" value="17.899046658762206" />
-      <entry key="M30" value="23.99152118074473" />
-      <entry key="H1" value="81.8485644808543" />
-      <entry key="H2" value="241.70559369253866" />
-      <entry key="H4" value="445.24043550820494" />
-      <entry key="D1" value="758.112915377266" />
-      <entry key="W1" value="831.9710189872843" />
+      <entry key="MS100" value="2.353334307570034E-18" />
+      <entry key="MS500" value="3.251213629718468E-4" />
+      <entry key="S2" value="0.2574432530313412" />
+      <entry key="S5" value="1.6179531163866696" />
+      <entry key="S10" value="4.963646609159976" />
+      <entry key="S30" value="14.891810049303349" />
+      <entry key="S60" value="20.665207414645316" />
+      <entry key="M2" value="25.61343252722716" />
+      <entry key="M5" value="37.91830966079226" />
+      <entry key="M10" value="52.62153509989046" />
+      <entry key="M15" value="60.99524286655892" />
+      <entry key="M30" value="76.3565538431756" />
+      <entry key="H1" value="132.59453485878427" />
+      <entry key="H2" value="287.77708426991137" />
+      <entry key="H4" value="493.79535837994916" />
+      <entry key="D1" value="821.3644346666242" />
+      <entry key="W1" value="900.0701467482073" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="1.4609377806191505E-71" />
-      <entry key="MS500" value="6.806539106369039E-15" />
-      <entry key="S2" value="2.872311823970479E-4" />
-      <entry key="S5" value="0.038308278353510986" />
-      <entry key="S10" value="0.19572500697026693" />
-      <entry key="S30" value="0.5806067836924643" />
-      <entry key="S60" value="0.7619755794593849" />
-      <entry key="M2" value="0.8729121258519577" />
-      <entry key="M5" value="0.9470833702594617" />
-      <entry key="M10" value="0.9732291413834708" />
-      <entry key="M15" value="0.984452293625926" />
-      <entry key="M30" value="1.2393045171406363" />
-      <entry key="H1" value="4.545076162106949" />
-      <entry key="H2" value="15.266174326976039" />
-      <entry key="H4" value="29.92546037409709" />
-      <entry key="D1" value="53.371045017653415" />
-      <entry key="W1" value="59.003439694613874" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.0" />
+      <entry key="S10" value="1.0" />
+      <entry key="S30" value="1.0000017362077525" />
+      <entry key="S60" value="1.0025510008583483" />
+      <entry key="M2" value="1.1157244102715453" />
+      <entry key="M5" value="2.2919662967775496" />
+      <entry key="M10" value="3.9793055655778033" />
+      <entry key="M15" value="4.953384459517456" />
+      <entry key="M30" value="6.428843384410666" />
+      <entry key="H1" value="10.04110118080458" />
+      <entry key="H2" value="20.583950326089912" />
+      <entry key="H4" value="35.43754000925818" />
+      <entry key="D1" value="59.947817979488335" />
+      <entry key="W1" value="65.93691174519832" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.2929277919311954" />
-      <entry key="MS500" value="3.050945985522852" />
-      <entry key="S2" value="5.6231042900806045" />
-      <entry key="S5" value="7.8989719711640065" />
-      <entry key="S10" value="10.199737269733767" />
-      <entry key="S30" value="14.327621709585795" />
-      <entry key="S60" value="16.29323845666468" />
-      <entry key="M2" value="17.534918691588974" />
-      <entry key="M5" value="18.38421800409816" />
-      <entry key="M10" value="18.688813098212943" />
-      <entry key="M15" value="18.88187665672978" />
-      <entry key="M30" value="25.229280259498847" />
-      <entry key="H1" value="86.38751694550695" />
-      <entry key="H2" value="256.9597857215679" />
-      <entry key="H4" value="475.15375021037187" />
-      <entry key="D1" value="811.4802885580787" />
-      <entry key="W1" value="890.973877495361" />
+      <entry key="MS100" value="1.0053601285004557E-4" />
+      <entry key="MS500" value="0.15870618692945612" />
+      <entry key="S2" value="0.8241653366458918" />
+      <entry key="S5" value="2.343568567677665" />
+      <entry key="S10" value="5.787474692342903" />
+      <entry key="S30" value="15.817514502447231" />
+      <entry key="S60" value="21.62631821691795" />
+      <entry key="M2" value="26.69662921429114" />
+      <entry key="M5" value="40.16133234540404" />
+      <entry key="M10" value="56.552124079726426" />
+      <entry key="M15" value="65.90699512876304" />
+      <entry key="M30" value="82.75800505650794" />
+      <entry key="H1" value="142.6155318787401" />
+      <entry key="H2" value="308.3420719267126" />
+      <entry key="H4" value="529.2171477569054" />
+      <entry key="D1" value="881.3079007869047" />
+      <entry key="W1" value="966.006376471251" />
     </decayedShown>
   </component>
   <component name="ProblemsViewState">
@@ -163,7 +163,7 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/230er/Documents/Projects&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/230er/Documents/Projects/smartsplit&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -264,6 +264,8 @@
       <workItem from="1781606540588" duration="1082000" />
       <workItem from="1781679743486" duration="2391000" />
       <workItem from="1781683643363" duration="1686000" />
+      <workItem from="1781875032693" duration="22000" />
+      <workItem from="1781884265808" duration="1285000" />
     </task>
     <servers />
   </component>
