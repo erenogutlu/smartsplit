@@ -1,5 +1,6 @@
 package com.smartsplit.backend.entity;
 
+import com.smartsplit.backend.Category;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ public class Expense {
 
     // Using BigDecimal for accurate money calculations
     private BigDecimal amount;
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     // The person who paid
     @ManyToOne
@@ -49,4 +53,7 @@ public class Expense {
 
     public List<User> getParticipants() { return participants; }
     public void setParticipants(List<User> participants) { this.participants = participants;}
+
+    public Category getCategory() { return category; }
+    public void setCategory(Category category) { this.category = category; }
 }
